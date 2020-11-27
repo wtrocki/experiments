@@ -4,31 +4,15 @@ directive @specifiedBy(
   url: String!
 ) on SCALAR
 
-type Configs {
-  cleanuppolicy: String
-}
-
-input CreateConfigsInput {
-  cleanuppolicy: String
-}
-
-input CreatePartitionsInput {
-  partition: Int
-  leader: Int
-  replicas: [CreateReplicasInput]
-}
-
-input CreateReplicasInput {
-  broker: Int
-  leader: Boolean
-  in_sync: Boolean
+input CreateTopicConfigInput {
+  retentionDays: Int
+  partitionCount: Int
+  minInSyncReplicas: Int
 }
 
 input CreateTopicInput {
   name: String
-  offset: Int
-  partitions: [CreatePartitionsInput]
-  configs: CreateConfigsInput
+  config: CreateTopicConfigInput
 }
 
 scalar GraphbackObjectID
@@ -44,33 +28,16 @@ input GraphbackObjectIDInput {
   between: [GraphbackObjectID!]
 }
 
-input IntInput {
-  ne: Int
-  eq: Int
-  le: Int
-  lt: Int
-  ge: Int
-  gt: Int
-  in: [Int!]
-  between: [Int!]
-}
-
-input MutateConfigsInput {
-  cleanuppolicy: String
-}
-
-input MutatePartitionsInput {
-  partition: Int
-  leader: Int
-  replicas: [CreateReplicasInput]
+input MutateTopicConfigInput {
+  retentionDays: Int
+  partitionCount: Int
+  minInSyncReplicas: Int
 }
 
 input MutateTopicInput {
   _id: GraphbackObjectID!
   name: String
-  offset: Int
-  partitions: [MutatePartitionsInput]
-  configs: MutateConfigsInput
+  config: MutateTopicConfigInput
 }
 
 type Mutation {
@@ -91,7 +58,6 @@ input PageRequest {
 
 type Partitions {
   partition: Int
-  leader: Int
   replicas: [Replicas]
 }
 
@@ -101,8 +67,6 @@ type Query {
 }
 
 type Replicas {
-  broker: Int
-  leader: Boolean
   in_sync: Boolean
 }
 
@@ -134,15 +98,21 @@ type Subscription {
 type Topic {
   _id: GraphbackObjectID!
   name: String
-  offset: Int
+
+  """@transient"""
   partitions: [Partitions]
-  configs: Configs
+  config: TopicConfig
+}
+
+type TopicConfig {
+  retentionDays: Int
+  partitionCount: Int
+  minInSyncReplicas: Int
 }
 
 input TopicFilter {
   _id: GraphbackObjectIDInput
   name: StringInput
-  offset: IntInput
   and: [TopicFilter!]
   or: [TopicFilter!]
   not: TopicFilter
@@ -161,5 +131,4 @@ input TopicSubscriptionFilter {
   not: TopicSubscriptionFilter
   _id: GraphbackObjectIDInput
   name: StringInput
-  offset: IntInput
 }

@@ -1,47 +1,26 @@
 
-""" @model """ 
+""" @model """
 type Topic {
   _id: GraphbackObjectID!
   name: String
-  offset: Int
+  """@transient"""
   partitions: [Partitions]
-  configs: Configs
+  config: TopicConfig
+}
+
+type TopicConfig {
+  retentionDays: Int
+  partitionCount: Int
+  minInSyncReplicas: Int
 }
 
 type Replicas {
-  broker: Int
-  leader: Boolean
   in_sync: Boolean
 }
 
 type Partitions {
   partition: Int
-  leader: Int
   replicas: [Replicas]
 }
-
-type Configs {
-  cleanuppolicy: String
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 scalar GraphbackObjectID
