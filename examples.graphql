@@ -1,0 +1,49 @@
+
+query getFilterdTopics{
+  findTopics(filter:{name:{eq: "test"}}){
+    items{
+      name
+      configs{
+        cleanuppolicy
+      }
+    }
+  }
+}
+
+query getTopics{
+  findTopics(orderBy:{field:"name"}){
+    items{
+      name
+      configs{
+        cleanuppolicy
+      }
+    }
+  }
+}
+
+
+
+mutation create {
+ createTopic(input:{
+    name:"anothertest",
+    configs:{
+      cleanuppolicy: "compact"
+    }
+  }){
+    _id
+    name
+  }
+}
+
+mutation delete {
+  updateTopic(input:{
+	  _id:"5fc0cf7f32dbf463c0c0ae37",
+    name:"test",
+    configs:{
+      cleanuppolicy: "compact"
+    }
+  }){
+    _id
+    name
+  }
+}

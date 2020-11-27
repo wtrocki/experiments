@@ -1,0 +1,15 @@
+{
+  "name": "strimzi-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "gqlserve serve --port=4000 model.graphql",
+    "schema": "gqlserve print-schema  model.graphql > fullschema.graphql"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "graphql-serve": "^1.1.0"
+  }
+}
