@@ -1,7 +1,7 @@
 
 """ @model """
 type Topic {
-  _id: GraphbackObjectID!
+  id: ID!
   name: String
   """@transient"""
   partitions: [Partitions]
@@ -22,5 +22,3 @@ type Partitions {
   partition: Int
   replicas: [Replicas]
 }
-
-scalar GraphbackObjectID

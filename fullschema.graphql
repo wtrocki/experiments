@@ -1,3 +1,5 @@
+Generated schema:
+
 """Exposes a URL that specifies the behaviour of this scalar."""
 directive @specifiedBy(
   """The URL that specifies the behaviour of this scalar."""
@@ -15,17 +17,14 @@ input CreateTopicInput {
   config: CreateTopicConfigInput
 }
 
-scalar GraphbackObjectID
-
-input GraphbackObjectIDInput {
-  ne: GraphbackObjectID
-  eq: GraphbackObjectID
-  le: GraphbackObjectID
-  lt: GraphbackObjectID
-  ge: GraphbackObjectID
-  gt: GraphbackObjectID
-  in: [GraphbackObjectID!]
-  between: [GraphbackObjectID!]
+input IDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  in: [ID!]
 }
 
 input MutateTopicConfigInput {
@@ -35,7 +34,7 @@ input MutateTopicConfigInput {
 }
 
 input MutateTopicInput {
-  _id: GraphbackObjectID!
+  id: ID!
   name: String
   config: MutateTopicConfigInput
 }
@@ -62,7 +61,7 @@ type Partitions {
 }
 
 type Query {
-  getTopic(id: GraphbackObjectID!): Topic
+  getTopic(id: ID!): Topic
   findTopics(filter: TopicFilter, page: PageRequest, orderBy: OrderByInput): TopicResultList!
 }
 
@@ -96,7 +95,7 @@ type Subscription {
 
 """ @model """
 type Topic {
-  _id: GraphbackObjectID!
+  id: ID!
   name: String
 
   """@transient"""
@@ -111,7 +110,7 @@ type TopicConfig {
 }
 
 input TopicFilter {
-  _id: GraphbackObjectIDInput
+  id: IDInput
   name: StringInput
   and: [TopicFilter!]
   or: [TopicFilter!]
@@ -129,6 +128,6 @@ input TopicSubscriptionFilter {
   and: [TopicSubscriptionFilter!]
   or: [TopicSubscriptionFilter!]
   not: TopicSubscriptionFilter
-  _id: GraphbackObjectIDInput
+  id: IDInput
   name: StringInput
 }
